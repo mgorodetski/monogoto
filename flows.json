@@ -1,0 +1,194 @@
+[
+    {
+        "id": "a96f8dabb7c19fd1",
+        "type": "tab",
+        "label": "MonogotoFlow",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "ada120fafed7ba89",
+        "type": "http in",
+        "z": "a96f8dabb7c19fd1",
+        "name": "passkey",
+        "url": "/monogoto/:passkey",
+        "method": "get",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 140,
+        "y": 740,
+        "wires": [
+            [
+                "e1bb27ac85d0531f"
+            ]
+        ]
+    },
+    {
+        "id": "e1bb27ac85d0531f",
+        "type": "http request",
+        "z": "a96f8dabb7c19fd1",
+        "name": "binanceApi",
+        "method": "GET",
+        "ret": "obj",
+        "paytoqs": "ignore",
+        "url": "https://api2.binance.com/api/v3/ticker/24hr",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "authType": "",
+        "senderr": false,
+        "x": 450,
+        "y": 740,
+        "wires": [
+            [
+                "93bb2cb04976c6f2"
+            ]
+        ]
+    },
+    {
+        "id": "93bb2cb04976c6f2",
+        "type": "function",
+        "z": "a96f8dabb7c19fd1",
+        "name": "priceChangeFilter",
+        "func": "msg.payload = msg.payload.filter(item=> item.priceChange>0)\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 730,
+        "y": 740,
+        "wires": [
+            [
+                "d141f1d8db9ff515"
+            ]
+        ]
+    },
+    {
+        "id": "d141f1d8db9ff515",
+        "type": "function",
+        "z": "a96f8dabb7c19fd1",
+        "name": "passkeyFilter",
+        "func": "msg.payload = msg.payload.filter(item=> item.symbol===msg.req.params.passkey)\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1010,
+        "y": 740,
+        "wires": [
+            [
+                "79ee061baf3d44da"
+            ]
+        ]
+    },
+    {
+        "id": "79ee061baf3d44da",
+        "type": "http response",
+        "z": "a96f8dabb7c19fd1",
+        "name": "response",
+        "statusCode": "",
+        "headers": {},
+        "x": 1260,
+        "y": 740,
+        "wires": []
+    },
+    {
+        "id": "9a4193765f45f6cf",
+        "type": "http in",
+        "z": "a96f8dabb7c19fd1",
+        "name": "symbols",
+        "url": "/monogoto",
+        "method": "get",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 140,
+        "y": 620,
+        "wires": [
+            [
+                "e10bb23dc983fb3d"
+            ]
+        ]
+    },
+    {
+        "id": "e10bb23dc983fb3d",
+        "type": "http request",
+        "z": "a96f8dabb7c19fd1",
+        "name": "binanceApi",
+        "method": "GET",
+        "ret": "obj",
+        "paytoqs": "ignore",
+        "url": "https://api2.binance.com/api/v3/ticker/24hr",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "authType": "",
+        "senderr": false,
+        "x": 450,
+        "y": 620,
+        "wires": [
+            [
+                "7153a58e81372768"
+            ]
+        ]
+    },
+    {
+        "id": "7153a58e81372768",
+        "type": "function",
+        "z": "a96f8dabb7c19fd1",
+        "name": "priceChangeFilter",
+        "func": "msg.payload = msg.payload.filter(item => item.priceChange > 0)\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 730,
+        "y": 620,
+        "wires": [
+            [
+                "7245b821664d5ff3"
+            ]
+        ]
+    },
+    {
+        "id": "7245b821664d5ff3",
+        "type": "change",
+        "z": "a96f8dabb7c19fd1",
+        "name": "payloadSymbol",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "msg.payload.symbol",
+                "tot": "jsonata"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1020,
+        "y": 620,
+        "wires": [
+            [
+                "dc96624779cbd814"
+            ]
+        ]
+    },
+    {
+        "id": "dc96624779cbd814",
+        "type": "http response",
+        "z": "a96f8dabb7c19fd1",
+        "name": "response",
+        "statusCode": "",
+        "headers": {},
+        "x": 1260,
+        "y": 620,
+        "wires": []
+    }
+]
