@@ -6,11 +6,11 @@ export const accountReducer = (state = initialState, action) => {
         case LOGIN:
             return { ...state, passkey: action.payload };
         case LOGOUT:
-            return { ...initialState };
+            return {...initialState, symbolsData: state.symbolsData};
         case GETMESSAGE:
             return { ...state, msg: action.payload };
         case GETSYMBOLS:
-            return {...state, symbolsData: action.payload};
+            return { ...state, symbolsData: action.payload };
         case PUTITEM:
             const newState = { ...state };
             const items = newState.itemsData;
@@ -32,3 +32,5 @@ export const accountReducer = (state = initialState, action) => {
             return state;
     }
 }
+
+

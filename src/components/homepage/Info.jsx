@@ -11,7 +11,7 @@ const Info = () => {
 
     const dispatch = useDispatch();
 
-    const handleClickReturnIndex = (name) => {
+    const handleClickGetInfo = (name) => {
         const element = itemsData.filter(item => item.symbol === name);
         if (!element[0] || (Date.now() - element[0].respTime > apiCallTimer))
             if (!element[0]) {
@@ -30,7 +30,6 @@ const Info = () => {
                 m: 3,
                 ml: 5,
                 borderRadius: 1,
-
             }}
         >
             <Box
@@ -38,7 +37,6 @@ const Info = () => {
                     display: 'flex',
                     flexWrap: 'wrap'
                 }} >
-
                 <Items />
             </Box>
             <Box
@@ -66,7 +64,7 @@ const Info = () => {
                                     bgcolor: '#e02e7e',
                                     border: '1px dashed black'
                                 }}
-                                    onClick={() => handleClickReturnIndex(name)}
+                                    onClick={() => handleClickGetInfo(name)}
                                 >
                                     <ListItemText primary={name} />
                                 </ListItemButton>
